@@ -1,32 +1,46 @@
-import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { passwordsTable } from './db/schema';
-import { passwordInsertSchema, passwordUpdateSchema } from './schema/password';
-import { eq } from 'drizzle-orm';
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+import { eq } from "drizzle-orm";
 
-const db = drizzle(process.env.DATABASE_URL!);
+import { passwordsTable } from "./db/schema";
+import { passwordInsertSchema, passwordUpdateSchema } from "./schema/password";
 
-export async function findAll(){
-    const passwords = await db.select().from(passwordsTable);
-    return passwords;
+const sql = neon(process.env.DATABASE_URL!);
+
+export const db = drizzle(sql);
+
+export async function findAll() {
+  return db.select().from(passwordsTable);
 }
 
-export async function findByID(id: number){
-    const password = await db.select().from(passwordsTable).where(eq(passwordsTable.id, id));
-    return password;
+export async function findByID(id: number) {
+  return db
+    .select()
+    .from(passwordsTable)
+    .where(eq(passwordsTable.id, id));
 }
 
-export async function insertPassword(input: object){
-    const password = passwordInsertSchema.parse(input);
-    await db.insert(passwordsTable).values(password);
+export async function insertPassword(input: unknown) {
+  const password = passwordInsertSchema.parse(input);
+
+  await db.insert(passwordsTable).values(password);
+
+  return { success: true };
 }
 
-export async function updatePassword(input: object) {
+export async function updatePassword(input: unknown) {
   const password = passwordUpdateSchema.parse(input);
 
-  return await db.update(passwordsTable).set(password.data).where(eq(passwordsTable.id, password.id));
+  await db
+    .update(passwordsTable)
+    .set(password.data)
+    .where(eq(passwordsTable.id, password.id));
+
+  return { success: true };
 }
 
-export async function deletePassword(id: number){
-    await db.delete(passwordsTable).where(eq(passwordsTable.id, id))
+export async function deletePassword(id: number) {
+  await db.delete(passwordsTable).where(eq(passwordsTable.id, id));
+
+  return { success: true };
 }
