@@ -23,6 +23,16 @@ const utils = trpc.useUtils();
         resolver: zodResolver(passwordInsertSchema),
   });
 
+  useEffect(() => {
+    if (data) {
+      reset({
+        site: data.site,
+        user: data.user,
+        password: data.password,
+      });
+    }
+  }, [data, reset]);
+
   const insertPassword = trpc.password.passwordInsert.useMutation({
     onSuccess: async () => {
         await utils.password.passwordFindAll.invalidate();
@@ -82,7 +92,7 @@ const utils = trpc.useUtils();
         </div>
       </div>
 
-      <Button><Plus/>Criar novo registro</Button>
+      <Button>{data ? "Atualizar senha" : <><Plus/>Criar nova senha</>}</Button>
 
     </form>
   );

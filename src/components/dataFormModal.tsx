@@ -10,24 +10,25 @@ import { PencilLine, Plus } from "lucide-react";
 import DataForm from "./dataForm";
 import { Button } from "./ui/button";
 
-export default function DataFormModal(data: any) {
+export default function DataFormModal({ data }: { data?: any }) {
 
   return (
         <Dialog>
             <DialogTrigger asChild>
                 <Button className="flex flex-row text-center justify-center">
-                  {data?.data ? 
-                  <><PencilLine className="h-5 w-5"/></> 
-                  : 
+                  {data ? 
+                  <><PencilLine className="h-5 w-5"/></> : 
                   <><Plus className="h-5 w-5" />Nova senha</>
                   }
                   </Button>
             </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{data?.data ? `Atualização de registro ${data.data.id}` : "Criação de registro"}</DialogTitle>
+              <DialogTitle>{data ? `Atualização de registro | ID: ${data.id}` : "Criação de registro"}</DialogTitle>
               <DialogDescription>
-                Assim que você preencher os campos e clicar em "Criar nova senha" o registro será enviado ao banco de dados! 🔥
+                {data ? 
+                `Assim que você preencher os campos e clicar em "Atualizar senha" o registro será enviado ao banco de dados! 🔥` : 
+                `Assim que você preencher os campos e clicar em "Criar nova senha" o registro será enviado ao banco de dados! 🔥`}
               </DialogDescription>
             </DialogHeader>
                 
