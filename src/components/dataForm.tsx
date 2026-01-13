@@ -28,7 +28,8 @@ const utils = trpc.useUtils();
       reset({
         site: data.site,
         user: data.user,
-        password: data.password,
+        encryptedPassword: data.encryptedPassword,
+        iv: data.iv,
       });
     }
   }, [data, reset]);
@@ -85,9 +86,9 @@ const utils = trpc.useUtils();
         </div>
 
         <div>
-            <Input placeholder="Senha" {...register("password")} />
+            <Input placeholder="Senha" {...register("encryptedPassword")} />
             <div className="text-red-500 text-xs">
-                {errors?.password?.message}
+                {errors?.encryptedPassword?.message}
             </div>
         </div>
       </div>

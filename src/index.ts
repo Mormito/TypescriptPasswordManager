@@ -13,7 +13,7 @@ export async function findAll() {
   return db.select().from(passwordsTable);
 }
 
-export async function findByID(id: number) {
+export async function findByID(id: string) {
   return db
     .select()
     .from(passwordsTable)
@@ -39,7 +39,7 @@ export async function updatePassword(input: unknown) {
   return { success: true };
 }
 
-export async function deletePassword(id: number) {
+export async function deletePassword(id: string) {
   await db.delete(passwordsTable).where(eq(passwordsTable.id, id));
 
   return { success: true };
