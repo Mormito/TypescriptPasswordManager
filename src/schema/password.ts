@@ -13,16 +13,16 @@ export const passwordInsertSchema = createInsertSchema(passwordsTable, {
     .min(1, "Registre um nome de usuário")
     .max(200, "Limite de 200 caracteres atingido"),
 
-    password: z
+    encryptedPassword: z
     .string()
     .min(6, "A senha precisa ter ao menos 6 caracteres")
     .max(500, "Limite de 500 caracteres atingido"),
-})
+});
 
 export const passwordUpdateSchema = z.object({
     data: passwordInsertSchema.partial(),
-    id: z.number()
-})
+    id: z.uuid()
+});
 
 export const passwordSelectSchema = createSelectSchema(passwordsTable);
 
