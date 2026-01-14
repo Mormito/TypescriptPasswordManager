@@ -2,8 +2,8 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
 
-import { passwordsTable } from "./db/schema";
-import { passwordInsertSchema, passwordUpdateSchema } from "./schema/password";
+import { passwordsTable } from "@/packages/db/schema";
+import { passwordInsertSchema, passwordUpdateSchema } from "@/packages/schema/password";
 
 const sql = neon(process.env.DATABASE_URL!);
 

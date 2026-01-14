@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { trpc } from "@/lib/trpc";
-import { PasswordInsert, passwordInsertSchema } from "@/schema/password";
+import { PasswordInsert, passwordInsertSchema } from "@/packages/schema/password";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { toast } from "sonner";

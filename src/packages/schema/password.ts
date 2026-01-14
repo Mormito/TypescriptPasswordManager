@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { passwordsTable } from "@/db/schema";
+import { passwordsTable } from "@/packages/db/schema";
 
 export const passwordInsertSchema = createInsertSchema(passwordsTable, {
     site: z

@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { usersTable } from "@/db/schema";
+import { usersTable } from "@/packages/db/schema";
 
 export const userInsertSchema = createInsertSchema(usersTable, {
     user: z
@@ -23,7 +23,7 @@ export const userUpdateSchema = z.object({
 
 export const userSelectSchema = createSelectSchema(usersTable);
 
-export type userInsert = z.infer<typeof userInsertSchema>;
-export type userSelect = z.infer<typeof userSelectSchema>;
+export type UserInsert = z.infer<typeof userInsertSchema>;
+export type UserSelect = z.infer<typeof userSelectSchema>;
 
-export type userUpdate = z.infer<typeof userUpdateSchema>; 
+export type UserUpdate = z.infer<typeof userUpdateSchema>; 
