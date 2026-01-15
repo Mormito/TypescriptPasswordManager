@@ -6,5 +6,5 @@ const Login = z.object({
     .min(10, "Minimo de 10 caracteres")
     .max(254, "Máximo de 254 caracteres"),
 
-    passwordHash: z.string(),
+    password: z.string(),
 });
