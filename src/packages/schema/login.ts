@@ -1,6 +1,6 @@
 import * as z from "zod";
  
-const loginSchema = z.object({
+export const loginSchema = z.object({
     email: z
     .string()
     .min(10, "Minimo de 10 caracteres")
@@ -8,3 +8,5 @@ const loginSchema = z.object({
 
     password: z.string(),
 });
+
+export type LoginFormData = z.infer<typeof loginSchema>;

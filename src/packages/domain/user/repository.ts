@@ -24,7 +24,7 @@ export async function findByID(id: string) {
 
 export async function insertUser(input: unknown) {
   const user = userInsertSchema.parse(input);
-  user.passwordHash = await argon2.hash(user.passwordHash);
+  user.passwordHash = await argon2.hash(user.passwordHash); //criptografia
   await db.insert(usersTable).values(user);
 
   return { success: true };
