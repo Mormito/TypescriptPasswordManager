@@ -1,6 +1,6 @@
 import * as z from "zod";
  
-const Login = z.object({
+const loginSchema = z.object({
     email: z
     .string()
     .min(10, "Minimo de 10 caracteres")
