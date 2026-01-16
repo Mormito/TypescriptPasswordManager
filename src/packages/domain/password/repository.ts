@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { passwordsTable } from "@/packages/db/schema";
 import { passwordInsertSchema, passwordUpdateSchema } from "@/packages/schema/password";
@@ -9,38 +9,52 @@ const sql = neon(process.env.DATABASE_URL!);
 
 export const db = drizzle(sql);
 
-export async function findAll() {
-  return db.select().from(passwordsTable);
-}
-
-export async function findByID(id: string) {
+export async function findAll(userId: string) {
   return db
     .select()
     .from(passwordsTable)
-    .where(eq(passwordsTable.id, id));
+    .where(eq(passwordsTable.userId, userId));
 }
 
-export async function insertPassword(input: unknown) {
+export async function findByID(userId: string, id: string) {
+  return db
+    .select()
+    .from(passwordsTable)
+    .where(and(
+      eq(passwordsTable.id, id),
+      eq(passwordsTable.userId, userId)));
+}
+
+export async function insertPassword(userId: string, input: unknown) {
   const password = passwordInsertSchema.parse(input);
 
-  await db.insert(passwordsTable).values(password);
+  await db.insert(passwordsTable).values({
+    ...password,
+    userId,
+  });
 
   return { success: true };
 }
 
-export async function updatePassword(input: unknown) {
+export async function updatePassword(userId: string, input: unknown) {
   const password = passwordUpdateSchema.parse(input);
 
   await db
     .update(passwordsTable)
     .set(password.data)
-    .where(eq(passwordsTable.id, password.id));
-
+    .where(and(
+      eq(passwordsTable.id, password.id),
+      eq(passwordsTable.userId, userId)));
+      
   return { success: true };
 }
 
-export async function deletePassword(id: string) {
-  await db.delete(passwordsTable).where(eq(passwordsTable.id, id));
+export async function deletePassword(userId: string, id: string) {
+  await db
+  .delete(passwordsTable)
+  .where(and(
+    eq(passwordsTable.id, id),
+    eq(passwordsTable.userId, userId)));
 
   return { success: true };
 }

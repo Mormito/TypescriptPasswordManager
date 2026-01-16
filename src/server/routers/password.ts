@@ -1,26 +1,26 @@
 import { z } from 'zod';
 
-import { publicProcedure, router } from '../trpc';
+import { privateProcedure, publicProcedure, router } from '../trpc';
 import { passwordInsertSchema, passwordUpdateSchema } from '@/packages/schema/password';
 import { deletePassword, findAll, findByID, insertPassword, updatePassword } from '@/packages/domain/password/repository';
 
 export const passwordRouter = router({
-    passwordFindAll: publicProcedure.query(async () => {
-    return await findAll();}),
+    passwordFindAll: privateProcedure.query(async ({ ctx }) => {
+    return await findAll(ctx.userId);}),
 
-    passwordFindByID: publicProcedure
+    passwordFindByID: privateProcedure
     .input(z.string())
-    .query(async ({input}) => {return await findByID(input)}), 
+    .query(async ({input, ctx}) => {return await findByID(ctx.userId, input)}), 
 
-    passwordInsert: publicProcedure
+    passwordInsert: privateProcedure
     .input(passwordInsertSchema)
-    .mutation(async ({input}) => {await insertPassword(input)}),
+    .mutation(async ({input, ctx}) => {await insertPassword(ctx.userId, input)}),
 
-    passwordUpdate: publicProcedure
+    passwordUpdate: privateProcedure
     .input(passwordUpdateSchema)
-    .mutation(async ({input}) => {await updatePassword(input)}),
+    .mutation(async ({input, ctx}) => {await updatePassword(ctx.userId, input)}),
 
-    passwordDelete: publicProcedure
+    passwordDelete: privateProcedure
     .input(z.string())
-    .mutation(async ({input}) => {return await deletePassword(input)})
+    .mutation(async ({input, ctx}) => {return await deletePassword(ctx.userId, input)})
 });
