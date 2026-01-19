@@ -1,5 +1,3 @@
-import { z } from 'zod';
-
 import { publicProcedure, router } from '../trpc';
 import { loginSchema } from '@/packages/schema/login';
 import { db } from '@/db';
@@ -9,8 +7,6 @@ import argon2 from 'argon2';
 import { TRPCError } from '@trpc/server';
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
-
-
 
 export const loginRouter = router({
     login: publicProcedure
@@ -39,7 +35,7 @@ export const loginRouter = router({
       process.env.JWT_SECRET!,
       { expiresIn: "7d" }
     );
-
+    
     const cookieStore = await cookies();
 
     cookieStore.set("session", token, {
@@ -51,5 +47,6 @@ export const loginRouter = router({
 
     return { success: true };
 
-    })
+    }),
+
 });

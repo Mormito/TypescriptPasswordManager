@@ -10,6 +10,7 @@ const sql = neon(process.env.DATABASE_URL!);
 export const db = drizzle(sql);
 
 export async function findAll(userId: string) {
+  console.log(userId);
   return db
     .select()
     .from(passwordsTable)
@@ -25,7 +26,7 @@ export async function findByID(userId: string, id: string) {
       eq(passwordsTable.userId, userId)));
 }
 
-export async function insertPassword(userId: string, input: unknown) {
+export async function insertPassword(userId: string, input: unknown) { // aqui ta recebendo normalmente o input + userId
   const password = passwordInsertSchema.parse(input);
 
   await db.insert(passwordsTable).values({

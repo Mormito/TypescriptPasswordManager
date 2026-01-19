@@ -24,7 +24,7 @@ export default function DataFormModal({ data }: { data?: any }) {
             </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{data ? `Atualização de registro | ID: ${data.id}` : "Criação de registro"}</DialogTitle>
+              <DialogTitle>{data ? `Atualização de registro` : "Criação de registro"}</DialogTitle>
               <DialogDescription>
                 {data ? 
                 `Assim que você preencher os campos e clicar em "Atualizar senha" o registro será enviado ao banco de dados! 🔥` : 

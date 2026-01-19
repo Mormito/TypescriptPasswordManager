@@ -91,9 +91,17 @@ const utils = trpc.useUtils();
                 {errors?.encryptedPassword?.message}
             </div>
         </div>
+
+        <div>
+            <Input placeholder="IV" {...register("iv")} />
+            <div className="text-red-500 text-xs">
+                {errors?.iv?.message}
+            </div>
+        </div>
+
       </div>
 
-      <Button>{data ? "Atualizar senha" : <><Plus/>Criar nova senha</>}</Button>
+      <Button>{data ? "Atualizar registro" : <><Plus/>Criar nova senha</>}</Button>
 
     </form>
   );
