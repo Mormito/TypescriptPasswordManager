@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage(){
 
@@ -21,9 +22,12 @@ export default function RegisterPage(){
         resolver: zodResolver(userInsertSchema),
   });
   
+  const router = useRouter();
+
   const insertUser = trpc.user.userInsert.useMutation({
     onSuccess: async() => {
       toast.success("Conta criada com sucesso")
+      router.push("/");
     },
     onError: async(err: any) => {
       toast.error("Erro: a conta não foi criada");

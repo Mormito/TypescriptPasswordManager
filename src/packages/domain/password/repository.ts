@@ -10,7 +10,7 @@ const sql = neon(process.env.DATABASE_URL!);
 export const db = drizzle(sql);
 
 export async function findAll(userId: string) {
-  console.log(userId);
+  console.log("DRIZZLE - FIND ALL == ", userId);
   return db
     .select()
     .from(passwordsTable)
@@ -27,7 +27,9 @@ export async function findByID(userId: string, id: string) {
 }
 
 export async function insertPassword(userId: string, input: unknown) { // aqui ta recebendo normalmente o input + userId
+  console.log("DRIZZLE - INSERT == ", userId);
   const password = passwordInsertSchema.parse(input);
+  console.log("DRIZZLE - DATA == ", input);
 
   await db.insert(passwordsTable).values({
     ...password,

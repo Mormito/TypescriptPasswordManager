@@ -13,9 +13,9 @@ export function middleware(req: NextRequest) {
   }
 
   // usuário LOGADO tentando acessar login/register
-  if (token && PUBLIC_ROUTES.includes(pathname)) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
-  }
+// if (token && PUBLIC_ROUTES.includes(pathname)) {
+//    return NextResponse.redirect(new URL("/dashboard", req.url));
+//  }
 
   return NextResponse.next();
 }

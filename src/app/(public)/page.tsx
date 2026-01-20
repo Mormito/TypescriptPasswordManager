@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { LoginFormData, loginSchema } from "@/packages/schema/login";
+import { useRouter } from "next/navigation";
 
 
 export default function LoginPage(){
@@ -20,10 +21,13 @@ export default function LoginPage(){
         } = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
   });
+
+  const router = useRouter();
   
   const login = trpc.login.login.useMutation({
     onSuccess: async() => {
-      toast.success("Login funcionou!")
+      toast.success("Login funcionou!");
+      router.push("/dashboard");
     },
     onError: async(err: any) => {
       toast.error("Login deu pau!");

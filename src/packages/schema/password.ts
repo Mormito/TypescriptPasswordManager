@@ -17,6 +17,9 @@ export const passwordInsertSchema = createInsertSchema(passwordsTable, {
     .string()
     .min(6, "A senha precisa ter ao menos 6 caracteres")
     .max(500, "Limite de 500 caracteres atingido"),
+}).omit({
+  userId: true,
+  id: true,
 });
 
 export const passwordUpdateSchema = z.object({
@@ -29,4 +32,4 @@ export const passwordSelectSchema = createSelectSchema(passwordsTable);
 export type PasswordInsert = z.infer<typeof passwordInsertSchema>;
 export type PasswordSelect = z.infer<typeof passwordSelectSchema>;
 
-export type passwordUpdate = z.infer<typeof passwordUpdateSchema>; 
+export type PasswordUpdate = z.infer<typeof passwordUpdateSchema>; 

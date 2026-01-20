@@ -5,7 +5,7 @@ import { passwordInsertSchema, passwordUpdateSchema } from '@/packages/schema/pa
 import { deletePassword, findAll, findByID, insertPassword, updatePassword } from '@/packages/domain/password/repository';
 
 export const passwordRouter = router({
-    passwordFindAll: privateProcedure.query(async ({ ctx }) => {console.log("CTX", ctx.userId); return await findAll(ctx.userId);}),
+    passwordFindAll: privateProcedure.query(async ({ ctx }) => {console.log("TRPC - FINDALL == ", ctx.userId); return await findAll(ctx.userId);}),
 
     passwordFindByID: privateProcedure
     .input(z.string())
@@ -13,7 +13,7 @@ export const passwordRouter = router({
 
     passwordInsert: privateProcedure
     .input(passwordInsertSchema)
-    .mutation(async ({input, ctx}) => {await insertPassword(ctx.userId, input)}), // aqui eu to passando o input + ctx
+    .mutation(async ({input, ctx}) => {console.log("TRPC - INSERT == ", ctx.userId); await insertPassword(ctx.userId, input)}), // aqui eu to passando o input + ctx
 
     passwordUpdate: privateProcedure
     .input(passwordUpdateSchema)
