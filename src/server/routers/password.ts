@@ -5,7 +5,7 @@ import { passwordInsertSchema, passwordUpdateSchema } from '@/packages/schema/pa
 import { deletePassword, findAll, findByID, insertPassword, updatePassword } from '@/packages/domain/password/repository';
 
 export const passwordRouter = router({
-    passwordFindAll: privateProcedure.query(async ({ ctx }) => {return await findAll(ctx.userId);}),
+    passwordFindAll: privateProcedure.query(async ({ ctx }) => {console.log("CTX", ctx.userId); return await findAll(ctx.userId);}),
 
     passwordFindByID: privateProcedure
     .input(z.string())

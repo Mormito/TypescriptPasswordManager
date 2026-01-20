@@ -29,7 +29,6 @@ const utils = trpc.useUtils();
         site: data.site,
         user: data.user,
         encryptedPassword: data.encryptedPassword,
-        iv: data.iv,
       });
     }
   }, [data, reset]);
@@ -92,16 +91,9 @@ const utils = trpc.useUtils();
             </div>
         </div>
 
-        <div>
-            <Input placeholder="IV" {...register("iv")} />
-            <div className="text-red-500 text-xs">
-                {errors?.iv?.message}
-            </div>
-        </div>
-
       </div>
 
-      <Button>{data ? "Atualizar registro" : <><Plus/>Criar nova senha</>}</Button>
+      <Button type="submit">{data ? "Atualizar registro" : <><Plus/>Criar nova senha</>}</Button>
 
     </form>
   );

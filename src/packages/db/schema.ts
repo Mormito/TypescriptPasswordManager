@@ -12,7 +12,6 @@ export const passwordsTable = pgTable("passwords", {
   site: varchar({length: 300}).notNull(),
   user: varchar({length: 200}).notNull(),
   encryptedPassword: varchar({length: 500}).notNull(),
-  iv: text("iv").notNull(),
 
   userId: uuid("user_id")
     .notNull()
