@@ -19,7 +19,6 @@ export default function Dashboard() {
       <Table className="w-full h-full">
         <TableHeader>
           <TableRow>
-            <TableHead className="text-center">ID</TableHead>
             <TableHead>Site</TableHead>
             <TableHead>Usuário</TableHead>
             <TableHead>Senha</TableHead>
@@ -30,10 +29,9 @@ export default function Dashboard() {
         <TableBody>
           {data?.map((item) => (
             <TableRow key={item.id}>
-              <TableCell className="text-center">{item.id}</TableCell>
               <TableCell>{item.site}</TableCell>
               <TableCell>{item.user}</TableCell>
-              <TableCell>{item.password}</TableCell>
+              <TableCell>{item.encryptedPassword}</TableCell>
               <TableCell>
                 <div className="flex flex-row gap-2">
                   <DataFormModal data={item} />

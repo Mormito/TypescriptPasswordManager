@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
-import { passwordsTable } from "@/db/schema";
+import { passwordsTable } from "@/packages/db/schema";
 
 export const passwordInsertSchema = createInsertSchema(passwordsTable, {
     site: z
@@ -13,20 +13,23 @@ export const passwordInsertSchema = createInsertSchema(passwordsTable, {
     .min(1, "Registre um nome de usuário")
     .max(200, "Limite de 200 caracteres atingido"),
 
-    password: z
+    encryptedPassword: z
     .string()
     .min(6, "A senha precisa ter ao menos 6 caracteres")
     .max(500, "Limite de 500 caracteres atingido"),
-})
+}).omit({
+  userId: true,
+  id: true,
+});
 
 export const passwordUpdateSchema = z.object({
     data: passwordInsertSchema.partial(),
-    id: z.number()
-})
+    id: z.uuid()
+});
 
 export const passwordSelectSchema = createSelectSchema(passwordsTable);
 
 export type PasswordInsert = z.infer<typeof passwordInsertSchema>;
 export type PasswordSelect = z.infer<typeof passwordSelectSchema>;
 
-export type passwordUpdate = z.infer<typeof passwordUpdateSchema>; 
+export type PasswordUpdate = z.infer<typeof passwordUpdateSchema>; 

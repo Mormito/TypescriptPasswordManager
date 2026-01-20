@@ -1,25 +1,25 @@
 import { z } from 'zod';
-import { deletePassword, findAll, findByID, insertPassword, updatePassword } from '@/index';
-import { publicProcedure, router } from '../trpc';
-import { passwordInsertSchema, passwordUpdateSchema } from '@/schema/password';
+
+import { privateProcedure, router } from '../trpc';
+import { passwordInsertSchema, passwordUpdateSchema } from '@/packages/schema/password';
+import { deletePassword, findAll, findByID, insertPassword, updatePassword } from '@/packages/domain/password/repository';
 
 export const passwordRouter = router({
-    passwordFindAll: publicProcedure.query(async () => {
-    return await findAll();}),
+    passwordFindAll: privateProcedure.query(async ({ ctx }) => {console.log("TRPC - FINDALL == ", ctx.userId); return await findAll(ctx.userId);}),
 
-    passwordFindByID: publicProcedure
-    .input(z.number())
-    .query(async ({input}) => {return await findByID(input)}), 
+    passwordFindByID: privateProcedure
+    .input(z.string())
+    .query(async ({input, ctx}) => {return await findByID(ctx.userId, input)}), 
 
-    passwordInsert: publicProcedure
+    passwordInsert: privateProcedure
     .input(passwordInsertSchema)
-    .mutation(async ({input}) => {await insertPassword(input)}),
+    .mutation(async ({input, ctx}) => {console.log("TRPC - INSERT == ", ctx.userId); await insertPassword(ctx.userId, input)}), // aqui eu to passando o input + ctx
 
-    passwordUpdate: publicProcedure
+    passwordUpdate: privateProcedure
     .input(passwordUpdateSchema)
-    .mutation(async ({input}) => {await updatePassword(input)}),
+    .mutation(async ({input, ctx}) => {await updatePassword(ctx.userId, input)}),
 
-    passwordDelete: publicProcedure
-    .input(z.number())
-    .mutation(async ({input}) => {return await deletePassword(input)})
+    passwordDelete: privateProcedure
+    .input(z.string())
+    .mutation(async ({input, ctx}) => {return await deletePassword(ctx.userId, input)})
 });

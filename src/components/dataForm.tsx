@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { trpc } from "@/lib/trpc";
-import { PasswordInsert, passwordInsertSchema } from "@/schema/password";
+import { PasswordInsert, passwordInsertSchema } from "@/packages/schema/password";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
@@ -28,7 +28,7 @@ const utils = trpc.useUtils();
       reset({
         site: data.site,
         user: data.user,
-        password: data.password,
+        encryptedPassword: data.encryptedPassword,
       });
     }
   }, [data, reset]);
@@ -85,14 +85,15 @@ const utils = trpc.useUtils();
         </div>
 
         <div>
-            <Input placeholder="Senha" {...register("password")} />
+            <Input placeholder="Senha" {...register("encryptedPassword")} />
             <div className="text-red-500 text-xs">
-                {errors?.password?.message}
+                {errors?.encryptedPassword?.message}
             </div>
         </div>
+
       </div>
 
-      <Button>{data ? "Atualizar senha" : <><Plus/>Criar nova senha</>}</Button>
+      <Button type="submit">{data ? "Atualizar registro" : <><Plus/>Criar nova senha</>}</Button>
 
     </form>
   );

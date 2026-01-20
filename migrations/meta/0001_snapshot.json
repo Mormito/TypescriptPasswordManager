@@ -1,6 +1,6 @@
 {
-  "id": "526b1059-df52-41d0-9207-51381b4d7ebe",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "52192da3-8a3d-40c9-8ba2-910d21460a50",
+  "prevId": "526b1059-df52-41d0-9207-51381b4d7ebe",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -30,12 +30,6 @@
         "encryptedPassword": {
           "name": "encryptedPassword",
           "type": "varchar(500)",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "iv": {
-          "name": "iv",
-          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
