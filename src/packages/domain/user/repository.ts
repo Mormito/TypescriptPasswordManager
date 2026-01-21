@@ -30,20 +30,20 @@ export async function insertUser(input: unknown) {
   return { success: true };
 }
 
-export async function updateUser(input: unknown) {
+export async function updateUser(userId: string, input: unknown) {
   const user = userUpdateSchema.parse(input);
 
   await db
     .update(usersTable)
     .set(user.data)
-    .where(eq(usersTable.id, user.id));
+    .where(eq(usersTable.id, userId)); //Agora recebe o userId do token
 
   return { success: true };
 }
 
 
-export async function deleteUser(id: string) {
-  await db.delete(usersTable).where(eq(usersTable.id, id));
+export async function deleteUser(userId: string) {
+  await db.delete(usersTable).where(eq(usersTable.id, userId)); //Agora recebe o userId do token
 
   return { success: true };
 }

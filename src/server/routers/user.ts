@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { publicProcedure, router } from '../trpc';
+import { privateProcedure, publicProcedure, router } from '../trpc';
 import { userInsertSchema, userUpdateSchema } from '@/packages/schema/user';
 import { deleteUser, findAll, findByID, insertUser, updateUser } from '@/packages/domain/user/repository';
 
@@ -16,11 +16,11 @@ export const userRouter = router({
     .input(userInsertSchema)
     .mutation(async ({input}) => {await insertUser(input)}),
 
-    userUpdate: publicProcedure
+    userUpdate: privateProcedure
     .input(userUpdateSchema)
-    .mutation(async ({input}) => {await updateUser(input)}),
+    .mutation(async ({input, ctx}) => {await updateUser(ctx.userId, input)}),
 
-    userDelete: publicProcedure
+    userDelete: privateProcedure
     .input(z.string())
-    .mutation(async ({input}) => {return await deleteUser(input)})
+    .mutation(async ({ctx}) => {return await deleteUser(ctx.userId)})
 });
