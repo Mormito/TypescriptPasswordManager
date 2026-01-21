@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 import { usersTable } from "@/packages/db/schema";
 import { userInsertSchema, userUpdateSchema } from "@/packages/schema/user"; 
 import argon2 from 'argon2';
+import { changePasswordSchema } from "@/packages/schema/user";
 
 
 const sql = neon(process.env.DATABASE_URL!);
@@ -30,20 +31,20 @@ export async function insertUser(input: unknown) {
   return { success: true };
 }
 
-export async function updateUser(userId: string, input: unknown) {
-  const user = userUpdateSchema.parse(input);
-
-  await db
-    .update(usersTable)
-    .set(user.data)
-    .where(eq(usersTable.id, userId)); //Agora recebe o userId do token
+export async function deleteUser(userId: string) {
+  await db.delete(usersTable).where(eq(usersTable.id, userId)); //Agora recebe o userId do token
 
   return { success: true };
 }
 
+export async function changePassword(userId: string, input: unknown) {
+  const user = changePasswordSchema.parse(input);
+  user.password = await argon2.hash(user.password); //criptografia
 
-export async function deleteUser(userId: string) {
-  await db.delete(usersTable).where(eq(usersTable.id, userId)); //Agora recebe o userId do token
+  await db
+    .update(usersTable)
+    .set({ passwordHash: user.password })
+    .where(eq(usersTable.id, userId)); //Agora recebe o userId do token
 
   return { success: true };
 }
