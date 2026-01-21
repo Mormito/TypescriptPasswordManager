@@ -16,6 +16,6 @@ export default function Logout(){
     }
 
     return (
-        <Button onClick={() => logout()}><LogOutIcon /><>Logout</></Button>
+        <Button onClick={() => logout()}><LogOutIcon />Logout</Button>
     );
 }
