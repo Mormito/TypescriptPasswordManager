@@ -1,9 +1,9 @@
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 import { usersTable } from "@/packages/db/schema";
-import { userInsertSchema, userUpdateSchema } from "@/packages/schema/user"; 
+import { changeDataSchema, userInsertSchema, userUpdateSchema } from "@/packages/schema/user"; 
 import argon2 from 'argon2';
 import { changePasswordSchema } from "@/packages/schema/user";
 
@@ -35,6 +35,34 @@ export async function deleteUser(userId: string) {
   await db.delete(usersTable).where(eq(usersTable.id, userId)); //Agora recebe o userId do token
 
   return { success: true };
+}
+
+export async function changeUsername(userId: string, input: unknown) {
+  const user = changeDataSchema.parse(input);
+
+  await db
+    .update(usersTable)
+    .set({ user: user.input })
+    .where(and(
+      eq(usersTable.id, userId),
+      eq(usersTable.user, user.old_data_input), //aqui eu defino que o user antigo deve ser inserido no campo, caso não seja = erro
+    ));
+
+    return { success: true };
+}
+
+export async function changeEmail(userId: string, input: unknown) {
+  const user = changeDataSchema.parse(input);
+
+  await db
+    .update(usersTable)
+    .set({ email: user.input })
+    .where(and(
+      eq(usersTable.id, userId),
+      eq(usersTable.email, user.old_data_input), //aqui eu defino que o email antigo deve ser inserido no campo, caso não seja = erro
+    ));
+
+    return { success: true };
 }
 
 export async function changePassword(userId: string, input: unknown) {

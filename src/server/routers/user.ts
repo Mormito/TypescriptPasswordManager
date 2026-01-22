@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { privateProcedure, publicProcedure, router } from '../trpc';
 import { userInsertSchema } from '@/packages/schema/user';
-import { changePassword, deleteUser, findAll, findByID, insertUser } from '@/packages/domain/user/repository';
+import { changeEmail, changePassword, changeUsername, deleteUser, findAll, findByID, insertUser } from '@/packages/domain/user/repository';
 import { changePasswordSchema } from '@/packages/schema/user';
 
 export const userRouter = router({
@@ -20,6 +20,14 @@ export const userRouter = router({
     userDelete: privateProcedure
     .input(z.string())
     .mutation(async ({ctx}) => {return await deleteUser(ctx.userId)}),
+
+    changeEmail: privateProcedure
+    .input(z.string())
+    .mutation(async ({input, ctx}) => {await changeEmail(ctx.userId, input)}),
+
+    changeUsername: privateProcedure
+    .input(z.string())
+    .mutation(async ({input, ctx}) => {await changeUsername(ctx.userId, input)}),
 
     changePassword: privateProcedure
     .input(changePasswordSchema)
