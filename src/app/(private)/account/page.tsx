@@ -10,12 +10,12 @@ export default function AccountPage(){
         <div className="w-full h-full flex justify-center items-center">
             
             <div className="w-full h-full mx-100 mt-40 border p-4">
-                <h1 className="text-3xl font-semibold">Sua conta</h1>
+                <h1 className="text-3xl font-semibold mb-2">Sua conta</h1>
                 <div className="flex flex-row gap-3">
                     <ChangeDataForm info="email" />
                     <ChangeDataForm info="user" />
                     <ChangePasswordForm />
-                    <Link href={'/dashboard'}><Button><ChevronLeft />Go back</Button></Link>
+                    <Link href={'/dashboard'}><Button><ChevronLeft />Voltar</Button></Link>
                 </div>
             </div>
             
