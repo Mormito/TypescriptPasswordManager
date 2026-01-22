@@ -27,3 +27,8 @@ Inicie o servidor
 ```bash
 npm run dev
 ```
+
+Créditos:
+```bash
+favicon: https://icon-icons.com/icon/lock/130885
+```
