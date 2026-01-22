@@ -28,7 +28,7 @@ export type UserSelect = z.infer<typeof userSelectSchema>;
 
 export type UserUpdate = z.infer<typeof userUpdateSchema>; 
 
-
+// Zod password
 export const changePasswordSchema = z
   .object({
     password: z.string(),
@@ -40,3 +40,21 @@ export const changePasswordSchema = z
   });
 
 export type ChangePassword = z.infer<typeof changePasswordSchema>;
+
+// Zod user or email
+export const changeDataSchema = z
+  .object({
+    old_data_input: z
+    .string()
+    .min(3, "Minimo de 3 caracteres")
+    .max(254, "Máximo de 254 caracteres"),
+
+    input: z.string(),
+    input2: z.string(),
+  })
+  .refine((data) => data.input === data.input2, {
+    message: "Os campos não coincidem",
+    path: ["input2"], 
+  });
+
+export type ChangeData = z.infer<typeof changeDataSchema>;
