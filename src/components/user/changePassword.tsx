@@ -55,7 +55,7 @@ export function ChangePasswordForm({ data }: { data?: any }) {
   return (
     <Dialog>
         <DialogTrigger asChild>
-          <Button>Mudar senha</Button>
+          <Button>Alterar senha</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
@@ -77,7 +77,7 @@ export function ChangePasswordForm({ data }: { data?: any }) {
                     </div>
                 </div>
                 </div>
-            <Button type="submit">Mudar senha</Button>
+            <Button type="submit">Alterar senha</Button>
 
             </form>
 

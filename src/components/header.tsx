@@ -10,9 +10,9 @@ export default function Header(){
     return (
         <div className="w-full flex flex-row justify-center items-center gap-8 lg:gap-10 p-5 border-b-2">
             <Logout />
-            <Link href={'/account'}><Button><Settings />Settings</Button></Link>
+            <Link href={'/account'}><Button><Settings />Configurações</Button></Link>
             <DataFormModal />
-
+            
         </div>
     );
 }
