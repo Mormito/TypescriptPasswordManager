@@ -5,12 +5,20 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { trpc } from "@/lib/trpc";
 import EraseData from "@/components/eraseData";
 import DataFormModal from "@/components/dataFormModal";
+import { RefreshCcw } from "lucide-react";
 
 export default function Dashboard() {
   const { data, isLoading, error } = trpc.password.passwordFindAll.useQuery();
   
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Erro: {error.message}</p>;
+  if (isLoading) return (
+    <div className="w-full h-full flex justify-center px-100 py-60">
+      <div className="flex flex-row gap-2 items-center">
+      <RefreshCcw className="w-4 h-4 animate-spin" />
+      <p>Carregando...</p></div>
+    </div>
+    );
+    
+  if (error) return ( <div className="w-full h-full flex justify-center px-100 py-60"><p className="text-red-600">Erro: {error.message}</p></div>);
 
   return (
     <div className="w-full h-full">
