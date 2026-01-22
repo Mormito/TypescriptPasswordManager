@@ -40,27 +40,37 @@ export async function deleteUser(userId: string) {
 export async function changeUsername(userId: string, input: unknown) {
   const user = changeDataSchema.parse(input);
 
-  await db
+  const result = await db
     .update(usersTable)
     .set({ user: user.input })
     .where(and(
       eq(usersTable.id, userId),
-      eq(usersTable.user, user.old_data_input), //aqui eu defino que o user antigo deve ser inserido no campo, caso não seja = erro
-    ));
+      eq(usersTable.user, user.old_data_input),
+    ))
+    .returning({ id: usersTable.id });
 
-    return { success: true };
+  if (result.length === 0) {
+    throw new Error("Nome de usuário atual incorreto");
+  }
+
+  return { success: true };
 }
 
 export async function changeEmail(userId: string, input: unknown) {
   const user = changeDataSchema.parse(input);
 
-  await db
+  const result = await db
     .update(usersTable)
     .set({ email: user.input })
     .where(and(
       eq(usersTable.id, userId),
       eq(usersTable.email, user.old_data_input), //aqui eu defino que o email antigo deve ser inserido no campo, caso não seja = erro
-    ));
+    ))
+    .returning({ id: usersTable.id });
+
+    if (result.length === 0){
+      throw new Error("Email atual incorreto")
+    }
 
     return { success: true };
 }

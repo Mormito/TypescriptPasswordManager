@@ -46,7 +46,7 @@ export const changeDataSchema = z
   .object({
     old_data_input: z
     .string()
-    .min(10, "Minimo de 3 caracteres")
+    .min(3, "Minimo de 3 caracteres")
     .max(254, "Máximo de 254 caracteres"),
 
     input: z.string(),
